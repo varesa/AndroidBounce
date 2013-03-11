@@ -17,6 +17,13 @@ public class BallView extends SurfaceView {
 	Bitmap ball_bitmap;
 	RenderThread renderer;
 	Thread		 renderThread;
+
+    float ballx;
+    float bally;
+    float ballr;
+
+    float ballvx;
+    float ballvy;
 	
 	public BallView(Context context) {
 		super(context);
@@ -36,6 +43,13 @@ public class BallView extends SurfaceView {
 	private void init() {
 		ball = getResources().getDrawable(R.drawable.ball);
 		Log.e("fi.dy.esav.GrafiikkaTest", "Initialising BallView");
+
+        ballx = 0;
+        bally = 0;
+        ballr = 0;
+
+        ballvx = 0;
+        ballvy = 0;
 	}
 	
 	public void startDraw() {
@@ -56,12 +70,7 @@ public class BallView extends SurfaceView {
 	public void stopDraw() {
 		renderer.running = false;
 	}
-	
-	@Override
-	public void onDraw(Canvas canvas) {
-		
-	}
-	
+
 	public void draw() {
 		Log.e("fi.dy.esav.GrafiikkaTest", "Drawing in the BallView");
 		while(!this.getHolder().getSurface().isValid()) continue;
@@ -72,7 +81,7 @@ public class BallView extends SurfaceView {
 		}
 		
 		Paint paint = new Paint();
-		canvas.drawBitmap(ball_bitmap,0, 0, paint);
+		canvas.drawBitmap(ball_bitmap, ballx, bally, paint);
 		
 		this.getHolder().unlockCanvasAndPost(canvas);
 		Log.e("fi.dy.esav.GrafiikkaTest", "Drawn in the BallView");
