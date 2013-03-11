@@ -7,6 +7,7 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.SurfaceView;
 import android.view.View;
 
@@ -14,6 +15,8 @@ public class BallView extends SurfaceView {
 
 	Drawable ball;
 	Bitmap ball_bitmap;
+	RenderThread renderer;
+	Thread		 renderThread;
 	
 	public BallView(Context context) {
 		super(context);
@@ -32,6 +35,24 @@ public class BallView extends SurfaceView {
 	
 	private void init() {
 		ball = getResources().getDrawable(R.drawable.ball);
+		Log.e("fi.dy.esav.GrafiikkaTest", "Initialising BallView");
+	}
+	
+	public void startDraw() {
+		Log.e("fi.dy.esav.GrafiikkaTest", "Starting drawing in the BallView");
+		if(renderer == null) {
+			renderer = new RenderThread(this);
+			renderThread = new Thread(renderer);
+			renderThread.start();
+		}
+	}
+	
+	public void pauseDraw() {
+		
+	}
+	
+	public void stopDraw() {
+		
 	}
 	
 	@Override
@@ -40,6 +61,7 @@ public class BallView extends SurfaceView {
 	}
 	
 	public void draw() {
+		Log.e("fi.dy.esav.GrafiikkaTest", "Drawing in the BallView");
 		while(!this.getHolder().getSurface().isValid()) continue;
 		Canvas canvas = this.getHolder().lockCanvas();
 		
@@ -51,5 +73,6 @@ public class BallView extends SurfaceView {
 		canvas.drawBitmap(ball_bitmap,0, 0, paint);
 		
 		this.getHolder().unlockCanvasAndPost(canvas);
+		Log.e("fi.dy.esav.GrafiikkaTest", "Drawn in the BallView");
 	}
 }
