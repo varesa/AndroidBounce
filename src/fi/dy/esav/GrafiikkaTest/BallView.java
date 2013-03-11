@@ -6,6 +6,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
+import android.text.StaticLayout;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.SurfaceView;
@@ -17,6 +18,8 @@ public class BallView extends SurfaceView {
 	Bitmap ball_bitmap;
 	RenderThread renderer;
 	Thread		 renderThread;
+
+    static final float speedIncrement = 5;
 
     float ballx;
     float bally;
@@ -47,8 +50,8 @@ public class BallView extends SurfaceView {
         bally = 0;
         ballr = 0;
 
-        ballvx = 0;
-        ballvy = 0;
+        ballvx = 1;
+        ballvy = 3;
 	}
 	
 	public void startDraw() {
@@ -69,6 +72,17 @@ public class BallView extends SurfaceView {
 		renderer.running = false;
 	}
 
+    private long oldTime = 0;
+
+    private long getTimePassed() {
+        if(oldTime == 0) {
+            oldTime = System.currentTimeMillis();
+        }
+        long deltaTime = System.currentTimeMillis() - oldTime;
+        oldTime = System.currentTimeMillis();
+        return deltaTime;
+    }
+
 	public void draw() {
 		while(!this.getHolder().getSurface().isValid()) continue;
 		Canvas canvas = this.getHolder().lockCanvas();
@@ -76,8 +90,13 @@ public class BallView extends SurfaceView {
 		if(ball_bitmap == null) {
 			ball_bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.ball);
 		}
-		
+
+        long deltaTime = getDrawingTime();
+        ballx += ballvx*deltaTime;
+        bally += ballvy*deltaTime;
+
 		Paint paint = new Paint();
+
 		canvas.drawBitmap(ball_bitmap, ballx, bally, paint);
 		
 		this.getHolder().unlockCanvasAndPost(canvas);
