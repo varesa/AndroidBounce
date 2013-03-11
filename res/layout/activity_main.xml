@@ -6,6 +6,8 @@
     tools:context=".StartScreen" >
 
     <fi.dy.esav.GrafiikkaTest.BallView
-        android:id="@+id/ballview" />
+        android:id="@+id/ballview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
 </RelativeLayout>
