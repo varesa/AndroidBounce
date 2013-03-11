@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">GrafiikkaTest</string>
+    <string name="title_activity_start">Startscreen</string>
+    <string name="startbuttonlabel">Press to start</string>
+    <string name="welcomelabel">Welcome to GrafiikkaTesti</string>
+
+</resources>
