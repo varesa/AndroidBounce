@@ -45,14 +45,16 @@ public class BallView extends SurfaceView {
 			renderThread = new Thread(renderer);
 			renderThread.start();
 		}
+		renderer.running = true;
+		renderer.paused = false;
 	}
 	
 	public void pauseDraw() {
-		
+		renderer.paused = true;
 	}
 	
 	public void stopDraw() {
-		
+		renderer.running = false;
 	}
 	
 	@Override
@@ -64,7 +66,7 @@ public class BallView extends SurfaceView {
 		Log.e("fi.dy.esav.GrafiikkaTest", "Drawing in the BallView");
 		while(!this.getHolder().getSurface().isValid()) continue;
 		Canvas canvas = this.getHolder().lockCanvas();
-		
+		if(canvas == null) return;
 		if(ball_bitmap == null) {
 			ball_bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.ball);
 		}

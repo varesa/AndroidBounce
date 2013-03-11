@@ -14,6 +14,8 @@ import android.view.animation.AlphaAnimation;
 
 public class MainActivity extends Activity {
 
+	BallView bw;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		Log.e("fi.dy.esav.GrafiikkaTest", "Creating MainActivity");
@@ -28,14 +30,21 @@ public class MainActivity extends Activity {
 		l.startAnimation(anim);
 		
 		Log.e("fi.dy.esav.GrafiikkaTest", "Finding BallView and starting rendering");
-		BallView bw = (BallView) findViewById(R.id.ballview);
+		bw = (BallView) findViewById(R.id.ballview);
 		bw.startDraw();
 		
 		anim = new AlphaAnimation(0f, 1f);
 		anim.setDuration(700);
 		l.startAnimation(anim);
-		
-		
-
+	}
+	
+	@Override
+	protected void onStop() {
+		bw.pauseDraw();
+	}
+	
+	@Override
+	protected void onDestroy() {
+		bw.stopDraw();
 	}
 }
