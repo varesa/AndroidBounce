@@ -6,6 +6,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
+import android.util.AttributeSet;
 import android.view.SurfaceView;
 import android.view.View;
 
@@ -16,7 +17,20 @@ public class BallView extends SurfaceView {
 	
 	public BallView(Context context) {
 		super(context);
-				
+		init();
+	}
+	
+	public BallView(Context context, AttributeSet attrs) {
+		super(context, attrs);
+		init();
+	}
+	
+	public BallView(Context context, AttributeSet attrs, int defStyle) {
+		super(context, attrs, defStyle);
+		init();
+	}
+	
+	private void init() {
 		ball = getResources().getDrawable(R.drawable.ball);
 	}
 	
