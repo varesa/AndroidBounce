@@ -14,12 +14,11 @@
         android:label="@string/app_name">
         <activity
             android:name="fi.dy.esav.GrafiikkaTest.MainActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:label="@string/app_name">
+            android:configChanges="orientation|keyboardHidden|screenSize">
         </activity>
         <activity
             android:name="fi.dy.esav.GrafiikkaTest.StartActivity"
-            android:label="@string/title_activity_start" >
+            android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
