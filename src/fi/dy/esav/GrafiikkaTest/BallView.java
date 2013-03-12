@@ -19,6 +19,7 @@ public class BallView extends SurfaceView {
 	RenderThread renderer;
 	Thread		 renderThread;
 
+    static final float TIMEFACTOR = 0.000000001f;
     static final float speedIncrement = 5;
 
     float ballx;
@@ -50,8 +51,8 @@ public class BallView extends SurfaceView {
         bally = 0;
         ballr = 0;
 
-        ballvx = 1;
-        ballvy = 3;
+        ballvx = 10;
+        ballvy = 30;
 	}
 	
 	public void startDraw() {
@@ -91,9 +92,10 @@ public class BallView extends SurfaceView {
 			ball_bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.ball);
 		}
 
-        long deltaTime = getDrawingTime();
-        ballx += ballvx*deltaTime;
-        bally += ballvy*deltaTime;
+        float delta = getDrawingTime()*(float)TIMEFACTOR;
+        ballx += ballvx*delta;
+        bally += ballvy*delta;
+        Log.e("fi.dy.esav.GrafiikkaTest", "Time passed: " + delta + ", new x: " + ballx + ", new y: " + bally);
 
 		Paint paint = new Paint();
 
