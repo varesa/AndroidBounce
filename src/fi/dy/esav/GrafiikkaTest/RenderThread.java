@@ -5,6 +5,8 @@ import android.view.View;
 
 public class RenderThread implements Runnable {
 
+    private static boolean MAX_FPS = false;
+
 	private BallView v;
 	boolean running = true;
 	boolean paused = false;
@@ -22,11 +24,13 @@ public class RenderThread implements Runnable {
 	public void run() {
 		while (running) {
 			v.draw();
-			try {
-				Thread.sleep(5);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
+            if(!MAX_FPS) {
+			    try {
+				    Thread.sleep(5);
+			    } catch (InterruptedException e) {
+				    e.printStackTrace();
+			    }
+            }
 			while (paused && running) {
 				try {
 					Thread.sleep(50);
