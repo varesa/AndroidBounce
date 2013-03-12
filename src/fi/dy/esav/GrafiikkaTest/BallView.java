@@ -6,11 +6,9 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
-import android.text.StaticLayout;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.SurfaceView;
-import android.view.View;
 
 public class BallView extends SurfaceView {
 
@@ -28,6 +26,11 @@ public class BallView extends SurfaceView {
 
     float ballvx;
     float ballvy;
+
+    private Bitmap buffer;
+    private Canvas cbuffer;
+
+    private Paint simplePaint;
 	
 	public BallView(Context context) {
 		super(context);
@@ -86,21 +89,36 @@ public class BallView extends SurfaceView {
 
 	public void draw() {
 		while(!this.getHolder().getSurface().isValid()) continue;
-		Canvas canvas = this.getHolder().lockCanvas();
-		if(canvas == null) return;
-		if(ball_bitmap == null) {
+
+        Canvas rcanvas = this.getHolder().lockCanvas();
+
+        if(rcanvas == null) return;
+
+        if(ball_bitmap == null) {
 			ball_bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.ball);
 		}
+
+        if(buffer == null) {
+            buffer = Bitmap.createBitmap(rcanvas.getWidth(), rcanvas.getHeight(), Bitmap.Config.ARGB_4444);
+        }
+
+        if(cbuffer == null) {
+            cbuffer = new Canvas(buffer);
+        }
+
+        if(simplePaint == null) {
+            simplePaint = new Paint();
+        }
 
         float delta = getDrawingTime()*(float)TIMEFACTOR;
         ballx += ballvx*delta;
         bally += ballvy*delta;
         Log.e("fi.dy.esav.GrafiikkaTest", "Time passed: " + delta + ", new x: " + ballx + ", new y: " + bally);
 
-		Paint paint = new Paint();
+        cbuffer.drawARGB(255,255,255,255);
+		cbuffer.drawBitmap(ball_bitmap, ballx, bally, simplePaint);
 
-		canvas.drawBitmap(ball_bitmap, ballx, bally, paint);
-		
-		this.getHolder().unlockCanvasAndPost(canvas);
+        rcanvas.drawBitmap(buffer, 0, 0, simplePaint);
+		this.getHolder().unlockCanvasAndPost(rcanvas);
 	}
 }
