@@ -38,7 +38,7 @@ public class BallTouchListener implements OnTouchListener {
             Log.e("fi.dy.esav.GrafiikkaTest", "Hit the ball!!!");
         }
 
-        return true;
+        return false;
     }
 
 }
