@@ -55,12 +55,12 @@ public class BallView extends SurfaceView {
 	private void init() {
 		ball = getResources().getDrawable(R.drawable.ball);
 
-        ballx = 0;
-        bally = 0;
+        ballx = 200;
+        bally = 200;
         ballr = 0;
 
-        ballvx = 10;
-        ballvy = 30;
+        ballvx = 0;
+        ballvy = 0;
         touchListener = new BallTouchListener(this);
         super.setOnTouchListener(touchListener);
 	}
