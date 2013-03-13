@@ -27,6 +27,7 @@ public class BallTouchListener implements OnTouchListener {
     }
 
     public boolean onTouch(View view, MotionEvent event) {
+        Log.e("fi.dy.esav.GrafiikkaTest", "Detected a touch");
         float touchX = event.getX();
         float touchY = event.getY();
 

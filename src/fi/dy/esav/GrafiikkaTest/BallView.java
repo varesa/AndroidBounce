@@ -17,6 +17,7 @@ public class BallView extends SurfaceView {
 	Thread		 renderThread;
 
     static final int BALLSIZE = 64;
+    static final int TOUCHTRESHOLD = 64;
 
     static final float TIMEFACTOR = 0.0000001f;
     static final float speedIncrement = 5;
@@ -149,10 +150,8 @@ public class BallView extends SurfaceView {
         }
 
         float delta = getDrawingTime()*(float)TIMEFACTOR;
-        Log.e("fi.dy.esav.GrafiikkaTest", "XVel: " + ballvx);
         ballx += ballvx*delta;
         bally += ballvy*delta;
-        Log.e("fi.dy.esav.GrafiikkaTest", "Time passed: " + delta + ", new x: " + ballx + ", new y: " + bally);
 
         cbuffer.drawARGB(255,255,255,255);
 		cbuffer.drawBitmap(ball_bitmap, ballx, bally, simplePaint);
