@@ -34,8 +34,11 @@ public class BallTouchListener implements OnTouchListener {
         float ballx = ballview.getBallCenter().x;
         float bally = ballview.getBallCenter().y;
 
-        if(Utils.getDistance(touchX, touchY, ballx, bally) < 0.5 * ballview.BALLSIZE) {
+        Log.e("fi.dy.esav.GrafiikkaTest", "Distance from touch to ball: " + Utils.getDistance(touchX, touchY, ballx, bally));
+
+        if(Utils.getDistance(touchX, touchY, ballx, bally) < ballview.TOUCHTRESHOLD) {
             Log.e("fi.dy.esav.GrafiikkaTest", "Hit the ball!!!");
+            ballview.addSpeed();
         }
 
         return false;

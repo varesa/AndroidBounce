@@ -16,8 +16,8 @@ public class BallView extends SurfaceView {
 	RenderThread renderer;
 	Thread		 renderThread;
 
-    static final int BALLSIZE = 64;
-    static final int TOUCHTRESHOLD = 256;
+    final int BALLSIZE = 64;
+    final int TOUCHTRESHOLD = 64;
 
     static final float TIMEFACTOR = 0.0000001f;
     static final float speedIncrement = 5;
@@ -59,8 +59,8 @@ public class BallView extends SurfaceView {
         bally = 200;
         ballr = 0;
 
-        ballvx = 0;
-        ballvy = 0;
+        ballvx = 10;
+        ballvy = 30;
         touchListener = new BallTouchListener(this);
         super.setOnTouchListener(touchListener);
 	}
@@ -119,6 +119,13 @@ public class BallView extends SurfaceView {
 
     public double getSpeed() {
         return Math.sqrt(Math.pow(ballvx,2) + Math.pow(ballvy,2));
+    }
+
+    public void addSpeed() {
+        float temp;
+        temp = ballvx;
+        ballvx = ballvy;
+        ballvy = temp;
     }
 
 	public void draw() {
