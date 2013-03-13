@@ -20,7 +20,7 @@ public class BallView extends SurfaceView {
     static final int BALLHEIGHT = 64;
     static final int BALLWIDTH = 64;
 
-    static final float TIMEFACTOR = 0.000000001f;
+    static final float TIMEFACTOR = 0.0000001f;
     static final float speedIncrement = 5;
 
     float ballx;
@@ -60,8 +60,8 @@ public class BallView extends SurfaceView {
         bally = 0;
         ballr = 0;
 
-        ballvx = 1000;
-        ballvy = 3000;
+        ballvx = 10;
+        ballvy = 30;
 	}
 	
 	public void startDraw() {
