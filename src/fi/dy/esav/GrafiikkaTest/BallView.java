@@ -17,7 +17,7 @@ public class BallView extends SurfaceView {
 	Thread		 renderThread;
 
     static final int BALLSIZE = 64;
-    static final int TOUCHTRESHOLD = 64;
+    static final int TOUCHTRESHOLD = 256;
 
     static final float TIMEFACTOR = 0.0000001f;
     static final float speedIncrement = 5;
