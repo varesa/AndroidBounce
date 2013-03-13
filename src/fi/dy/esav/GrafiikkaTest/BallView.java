@@ -1,10 +1,7 @@
 package fi.dy.esav.GrafiikkaTest;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Canvas;
-import android.graphics.Paint;
+import android.graphics.*;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -12,13 +9,14 @@ import android.view.SurfaceView;
 
 public class BallView extends SurfaceView {
 
+    BallTouchListener touchListener;
+
 	Drawable ball;
 	Bitmap ball_bitmap;
 	RenderThread renderer;
 	Thread		 renderThread;
 
-    static final int BALLHEIGHT = 64;
-    static final int BALLWIDTH = 64;
+    static final int BALLSIZE = 64;
 
     static final float TIMEFACTOR = 0.0000001f;
     static final float speedIncrement = 5;
@@ -62,7 +60,13 @@ public class BallView extends SurfaceView {
 
         ballvx = 10;
         ballvy = 30;
+        touchListener = new BallTouchListener(this);
+        super.setOnTouchListener(touchListener);
 	}
+
+    public Point getBallCenter() {
+        return new Point((int) (ballx + 0.5 * BALLSIZE), (int) (bally + 0.5 * BALLSIZE));
+    }
 	
 	public void startDraw() {
 		if(renderer == null) {
@@ -97,16 +101,16 @@ public class BallView extends SurfaceView {
         if(ballx < 0) {
             ballx = 0;
             ballvx = -ballvx;
-        } else if(ballx + BALLWIDTH > screenX) {
-            ballx = screenX - BALLWIDTH;
+        } else if(ballx + BALLSIZE > screenX) {
+            ballx = screenX - BALLSIZE;
             ballvx = -ballvx;
         }
 
         if(bally < 0) {
             bally = 0;
             ballvy = -ballvy;
-        } else if(bally + BALLHEIGHT > screenY) {
-            bally = screenY - BALLHEIGHT;
+        } else if(bally + BALLSIZE > screenY) {
+            bally = screenY - BALLSIZE;
             ballvy = -ballvy;
         }
 
