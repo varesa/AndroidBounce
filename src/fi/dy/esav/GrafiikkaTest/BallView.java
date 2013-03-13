@@ -17,6 +17,9 @@ public class BallView extends SurfaceView {
 	RenderThread renderer;
 	Thread		 renderThread;
 
+    static final int BALLHEIGHT = 64;
+    static final int BALLWIDTH = 64;
+
     static final float TIMEFACTOR = 0.000000001f;
     static final float speedIncrement = 5;
 
@@ -31,6 +34,9 @@ public class BallView extends SurfaceView {
     private Canvas cbuffer;
 
     private Paint simplePaint;
+
+    private int screenX;
+    private int screenY;
 	
 	public BallView(Context context) {
 		super(context);
@@ -54,8 +60,8 @@ public class BallView extends SurfaceView {
         bally = 0;
         ballr = 0;
 
-        ballvx = 10;
-        ballvy = 30;
+        ballvx = 1000;
+        ballvy = 3000;
 	}
 	
 	public void startDraw() {
@@ -87,10 +93,38 @@ public class BallView extends SurfaceView {
         return deltaTime;
     }
 
+    private void checkCollisions() {
+        if(ballx < 0) {
+            ballx = 0;
+            ballvx = -ballvx;
+        } else if(ballx + BALLWIDTH > screenX) {
+            ballx = screenX - BALLWIDTH;
+            ballvx = -ballvx;
+        }
+
+        if(bally < 0) {
+            bally = 0;
+            ballvy = -ballvy;
+        } else if(bally + BALLHEIGHT > screenY) {
+            bally = screenY - BALLHEIGHT;
+            ballvy = -ballvy;
+        }
+
+    }
+
+    public double getSpeed() {
+        return Math.sqrt(Math.pow(ballvx,2) + Math.pow(ballvy,2));
+    }
+
 	public void draw() {
 		while(!this.getHolder().getSurface().isValid()) continue;
 
         Canvas rcanvas = this.getHolder().lockCanvas();
+
+        screenX = rcanvas.getWidth();
+        screenY = rcanvas.getHeight();
+
+        checkCollisions();
 
         if(rcanvas == null) return;
 
@@ -111,6 +145,7 @@ public class BallView extends SurfaceView {
         }
 
         float delta = getDrawingTime()*(float)TIMEFACTOR;
+        Log.e("fi.dy.esav.GrafiikkaTest", "XVel: " + ballvx);
         ballx += ballvx*delta;
         bally += ballvy*delta;
         Log.e("fi.dy.esav.GrafiikkaTest", "Time passed: " + delta + ", new x: " + ballx + ", new y: " + bally);
