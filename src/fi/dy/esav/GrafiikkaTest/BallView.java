@@ -19,8 +19,9 @@ public class BallView extends SurfaceView {
     final int BALLSIZE = 64;
     final int TOUCHTRESHOLD = 128;
 
-    static final float TIMEFACTOR = 0.0000001f;
-    static final float speedIncrement = 5;
+    final float TIMEFACTOR = 0.0000001f;
+    final float speedIncrement = 5;
+    final float ROTATEFACTOR = 0.03f;
 
     float ballx;
     float bally;
@@ -160,7 +161,7 @@ public class BallView extends SurfaceView {
         ballx += ballvx*delta;
         bally += ballvy*delta;
 
-        ballr += getSpeed();
+        ballr += getSpeed() * delta * ROTATEFACTOR;
         if(ballr > 360) {
             ballr -= 360;
         }
