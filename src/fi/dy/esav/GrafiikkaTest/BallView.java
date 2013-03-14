@@ -34,6 +34,7 @@ public class BallView extends SurfaceView {
     private Canvas cbuffer;
 
     private Paint simplePaint;
+    private Paint arrowPaint;
 
     private int screenX;
     private int screenY;
@@ -123,10 +124,16 @@ public class BallView extends SurfaceView {
     }
 
     public void addSpeed() {
-        float temp;
+        /*float temp;
         temp = ballvx;
         ballvx = ballvy;
-        ballvy = temp;
+        ballvy = temp;                    */
+
+        float r = (float) (Math.sqrt(Math.pow(ballvx, 2) + Math.pow(ballvy, 2)));
+        float theta = (float) (Math.atan2(bally, ballx));
+
+        theta = (float) (0.30 * theta + 0.7 * Math.toRadians(ballr));
+
     }
 
 	public void draw() {
@@ -157,12 +164,16 @@ public class BallView extends SurfaceView {
             simplePaint = new Paint();
         }
 
+        if(arrowPaint == null) {
+            arrowPaint = new Paint();
+            arrowPaint.setStrokeWidth(3f);
+        }
+
         float delta = getDrawingTime()*(float)TIMEFACTOR;
         ballx += ballvx*delta;
         bally += ballvy*delta;
 
         ballr += getSpeed() * delta * ROTATEFACTOR;
-        Log.e("fi.dy.esav.GrafiikkaTest", "Ball rotation speed: " + ballr);
 
         if(ballr > 360) {
             ballr -= 360;
@@ -171,6 +182,7 @@ public class BallView extends SurfaceView {
         cbuffer.drawARGB(255,255,255,255);
         cbuffer.rotate(ballr, (float) (ballx + 0.5*BALLSIZE), (float)(bally + 0.5*BALLSIZE));
 		cbuffer.drawBitmap(ball_bitmap, ballx, bally, simplePaint);
+        cbuffer.drawLine((float) (ballx + 0.5 * BALLSIZE), (float) (bally + 0.5 * BALLSIZE + 60), (float) (ballx + 0.5 * BALLSIZE), (float) (bally + 0.5 * BALLSIZE + 60 + 35), arrowPaint);
         cbuffer.rotate(-ballr, (float) (ballx + 0.5*BALLSIZE), (float)(bally + 0.5*BALLSIZE));
 
         rcanvas.drawBitmap(buffer, 0, 0, simplePaint);
