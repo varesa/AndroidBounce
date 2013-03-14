@@ -160,8 +160,16 @@ public class BallView extends SurfaceView {
         ballx += ballvx*delta;
         bally += ballvy*delta;
 
+        ballr += getSpeed();
+        if(ballr > 360) {
+            ballr -= 360;
+        }
+
         cbuffer.drawARGB(255,255,255,255);
+        cbuffer.rotate(ballr, (float) (ballx + 0.5*BALLSIZE), (float)(bally + 0.5*BALLSIZE));
 		cbuffer.drawBitmap(ball_bitmap, ballx, bally, simplePaint);
+        Log.e("fi.dy.esav.GrafiikkaTest", "Ball width: " + ball_bitmap.getWidth());
+        cbuffer.rotate(-ballr, (float) (ballx + 0.5*BALLSIZE), (float)(bally + 0.5*BALLSIZE));
 
         rcanvas.drawBitmap(buffer, 0, 0, simplePaint);
 		this.getHolder().unlockCanvasAndPost(rcanvas);
