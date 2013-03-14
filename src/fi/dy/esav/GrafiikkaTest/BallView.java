@@ -21,7 +21,7 @@ public class BallView extends SurfaceView {
 
     final float TIMEFACTOR = 0.0000001f;
     final float speedIncrement = 5;
-    final float ROTATEFACTOR = 0.03f;
+    final float ROTATEFACTOR = 0.1f;
 
     float ballx;
     float bally;
@@ -162,6 +162,8 @@ public class BallView extends SurfaceView {
         bally += ballvy*delta;
 
         ballr += getSpeed() * delta * ROTATEFACTOR;
+        Log.e("fi.dy.esav.GrafiikkaTest", "Ball rotation speed: " + ballr);
+
         if(ballr > 360) {
             ballr -= 360;
         }
@@ -169,7 +171,6 @@ public class BallView extends SurfaceView {
         cbuffer.drawARGB(255,255,255,255);
         cbuffer.rotate(ballr, (float) (ballx + 0.5*BALLSIZE), (float)(bally + 0.5*BALLSIZE));
 		cbuffer.drawBitmap(ball_bitmap, ballx, bally, simplePaint);
-        Log.e("fi.dy.esav.GrafiikkaTest", "Ball width: " + ball_bitmap.getWidth());
         cbuffer.rotate(-ballr, (float) (ballx + 0.5*BALLSIZE), (float)(bally + 0.5*BALLSIZE));
 
         rcanvas.drawBitmap(buffer, 0, 0, simplePaint);
