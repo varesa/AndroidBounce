@@ -18,18 +18,15 @@ public class MainActivity extends Activity {
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		Log.e("fi.dy.esav.GrafiikkaTest", "Creating MainActivity");
 		super.onCreate(savedInstanceState);
 
-		Log.e("fi.dy.esav.GrafiikkaTest", "Setting Layout");
 		setContentView(R.layout.activity_main);
 		View l = findViewById(R.id.main_layout);
 		
 		AlphaAnimation anim = new AlphaAnimation(0, 0);
 		anim.setDuration(0);
 		l.startAnimation(anim);
-		
-		Log.e("fi.dy.esav.GrafiikkaTest", "Finding BallView and starting rendering");
+
 		bw = (BallView) findViewById(R.id.ballview);
 		bw.startDraw();
 		

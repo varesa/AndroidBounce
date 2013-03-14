@@ -5,6 +5,8 @@ import android.view.View;
 
 public class RenderThread implements Runnable {
 
+    private static boolean MAX_FPS = false;
+
 	private BallView v;
 	boolean running = true;
 	boolean paused = false;
@@ -14,28 +16,25 @@ public class RenderThread implements Runnable {
 	}
 
 	public RenderThread(BallView v) {
-		Log.e("fi.dy.esav.GrafiikkaTest", "Initialising RenderThread");
 		this.v = v;
 		running = true;
 	}
 
 	@Override
 	public void run() {
-		Log.e("fi.dy.esav.GrafiikkaTest", "Running RenderThread");
 		while (running) {
-			Log.e("fi.dy.esav.GrafiikkaTest", "Rendering");
 			v.draw();
-			try {
-				Thread.sleep(1);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+            if(!MAX_FPS) {
+			    try {
+				    Thread.sleep(5);
+			    } catch (InterruptedException e) {
+				    e.printStackTrace();
+			    }
+            }
 			while (paused && running) {
 				try {
 					Thread.sleep(50);
 				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}
