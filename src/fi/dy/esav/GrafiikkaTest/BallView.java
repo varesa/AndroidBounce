@@ -20,7 +20,11 @@ public class BallView extends SurfaceView {
     final int TOUCHTRESHOLD = 128;
 
     final float TIMEFACTOR = 0.0000001f;
-    final float speedIncrement = 5;
+
+    final float SPEEDINCREMENT = 5;
+    final float FRICTION = 0.3f;
+
+
     final float ROTATEFACTOR = 0.1f;
 
     float ballx;
@@ -124,16 +128,27 @@ public class BallView extends SurfaceView {
     }
 
     public void addSpeed() {
-        /*float temp;
-        temp = ballvx;
-        ballvx = ballvy;
-        ballvy = temp;                    */
+        float r = (float) (Math.sqrt(Math.pow(ballvx, 2) + Math.pow(ballvy, 2)));
+        float theta = (float) (Math.atan2(bally, ballx) + 90);
 
+        //theta = (float) (0.30 * theta + 0.7 * Math.toRadians(ballr));
+        theta = (float) (Math.toRadians(ballr));
+        r += SPEEDINCREMENT;
+
+        ballvx = (float) (r * Math.cos(theta));
+        ballvy = (float) (r * Math.sin(theta));
+
+
+    }
+
+    public void decreaseSpeed(float delta) {
         float r = (float) (Math.sqrt(Math.pow(ballvx, 2) + Math.pow(ballvy, 2)));
         float theta = (float) (Math.atan2(bally, ballx));
 
-        theta = (float) (0.30 * theta + 0.7 * Math.toRadians(ballr));
+        r -= FRICTION * delta;
 
+        ballvx = (float) (r * Math.cos(theta));
+        ballvy = (float) (r * Math.sin(theta));
     }
 
 	public void draw() {
@@ -170,10 +185,14 @@ public class BallView extends SurfaceView {
         }
 
         float delta = getDrawingTime()*(float)TIMEFACTOR;
+
+        decreaseSpeed(delta);
+
         ballx += ballvx*delta;
         bally += ballvy*delta;
 
         ballr += getSpeed() * delta * ROTATEFACTOR;
+
 
         if(ballr > 360) {
             ballr -= 360;
