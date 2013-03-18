@@ -137,13 +137,13 @@ public class BallView extends SurfaceView {
 
         ballvx = (float) (r * Math.cos(theta));
         ballvy = (float) (r * Math.sin(theta));
-
+        Log.e("dy.fi.esav.GrafiikkaTest", "Angle in degrees: " + ballr + ", and in radians: " + Math.toRadians(ballr));
 
     }
 
     public void decreaseSpeed(float delta) {
         float r = (float) (Math.sqrt(Math.pow(ballvx, 2) + Math.pow(ballvy, 2)));
-        float theta = (float) (Math.atan2(bally, ballx));
+        float theta = (float) (Math.atan2(ballvy, ballvx));
 
         r -= FRICTION * delta;
 
@@ -201,7 +201,8 @@ public class BallView extends SurfaceView {
         cbuffer.drawARGB(255,255,255,255);
         cbuffer.rotate(ballr, (float) (ballx + 0.5*BALLSIZE), (float)(bally + 0.5*BALLSIZE));
 		cbuffer.drawBitmap(ball_bitmap, ballx, bally, simplePaint);
-        cbuffer.drawLine((float) (ballx + 0.5 * BALLSIZE), (float) (bally + 0.5 * BALLSIZE + 60), (float) (ballx + 0.5 * BALLSIZE), (float) (bally + 0.5 * BALLSIZE + 60 + 35), arrowPaint);
+        //cbuffer.drawLine((float) (ballx + 0.5 * BALLSIZE), (float) (bally + 0.5 * BALLSIZE + 60), (float) (ballx + 0.5 * BALLSIZE), (float) (bally + 0.5 * BALLSIZE + 60 + 35), arrowPaint);
+        cbuffer.drawLine((float) (ballx + 0.5 * BALLSIZE + 60), (float) (bally + 0.5 * BALLSIZE), (float) (ballx + 0.5 * BALLSIZE + 60 + 35), (float) (bally + 0.5 * BALLSIZE), arrowPaint);
         cbuffer.rotate(-ballr, (float) (ballx + 0.5*BALLSIZE), (float)(bally + 0.5*BALLSIZE));
 
         rcanvas.drawBitmap(buffer, 0, 0, simplePaint);
