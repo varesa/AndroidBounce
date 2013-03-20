@@ -21,11 +21,11 @@ public class BallView extends SurfaceView {
 
     final float TIMEFACTOR = 0.0000001f;
 
-    final float SPEEDINCREMENT = 5;
-    final float FRICTION = 0.3f;
+    final float SPEEDINCREMENT = 6f;
+    final float FRICTION = 0.15f;
 
 
-    final float ROTATEFACTOR = 0.1f;
+    final float ROTATEFACTOR = 0.4f;
 
     float ballx;
     float bally;
@@ -63,10 +63,10 @@ public class BallView extends SurfaceView {
 
         ballx = 200;
         bally = 200;
-        ballr = 0;
+        ballr = 45;
 
-        ballvx = 10;
-        ballvy = 30;
+        ballvx = 5;
+        ballvy = 15;
         touchListener = new BallTouchListener(this);
         super.setOnTouchListener(touchListener);
 	}
@@ -128,8 +128,23 @@ public class BallView extends SurfaceView {
     }
 
     public void addSpeed() {
-        float r = (float) (Math.sqrt(Math.pow(ballvx, 2) + Math.pow(ballvy, 2)));
-        float theta = (float) (Math.atan2(bally, ballx) + 90);
+
+        float cur_r = (float) (Math.sqrt(Math.pow(ballvx, 2) + Math.pow(ballvy, 2)));
+        float cur_theta = (float) (Math.atan2(ballvy, ballvx));
+
+        //cur_r *= 0.3;
+
+        float cur_vx = (float) ( cur_r * Math.cos(cur_theta) );
+        float cur_vy = (float) ( cur_r * Math.sin(cur_theta) );
+
+        float new_theta = (float) ( Math.toRadians(ballr) );
+        float new_r = (float) (  SPEEDINCREMENT );
+
+        float new_vx = (float) ( (cur_r + new_r) * Math.cos(new_theta) );
+        float new_vy = (float) ( (cur_r + new_r) * Math.sin(new_theta) );
+
+        /*float r = (float) (Math.sqrt(Math.pow(ballvx, 2) + Math.pow(ballvy, 2)));
+        float theta = (float) (Math.atan2(ballvy, ballvx) + 90);
 
         //theta = (float) (0.30 * theta + 0.7 * Math.toRadians(ballr));
         theta = (float) (Math.toRadians(ballr));
@@ -137,7 +152,11 @@ public class BallView extends SurfaceView {
 
         ballvx = (float) (r * Math.cos(theta));
         ballvy = (float) (r * Math.sin(theta));
-        Log.e("dy.fi.esav.GrafiikkaTest", "Angle in degrees: " + ballr + ", and in radians: " + Math.toRadians(ballr));
+        Log.e("dy.fi.esav.GrafiikkaTest", "Angle in degrees: " + ballr + ", and in radians: " + Math.toRadians(ballr));*/
+
+        ballvx = new_vx;// + new_vx;
+        ballvy = new_vy;// + cur_vy;
+
 
     }
 
