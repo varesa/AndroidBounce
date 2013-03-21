@@ -38,10 +38,12 @@ public class MainActivity extends Activity {
 	@Override
 	protected void onStop() {
 		bw.pauseDraw();
+        super.onStop();;
 	}
 	
 	@Override
 	protected void onDestroy() {
 		bw.stopDraw();
+        super.onDestroy();
 	}
 }
