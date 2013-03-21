@@ -23,7 +23,6 @@ public class BallView extends SurfaceView {
     private MediaPlayer sndEffect;
 
     final int BALLSIZE = 64;
-    final int TOUCHTRESHOLD = 128;
 
     final float TIMEFACTOR = 0.0000001f;
 
