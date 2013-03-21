@@ -21,11 +21,11 @@ public class BallView extends SurfaceView {
 
     final float TIMEFACTOR = 0.0000001f;
 
-    final float SPEEDINCREMENT = 6f;
-    final float FRICTION = 0.15f;
+    final float SPEEDINCREMENT = 60f;
+    final float FRICTION = 0.10f;
 
 
-    final float ROTATEFACTOR = 0.4f;
+    final float ROTATEFACTOR = 0.35f;
 
     float ballx;
     float bally;
@@ -127,7 +127,7 @@ public class BallView extends SurfaceView {
         return Math.sqrt(Math.pow(ballvx,2) + Math.pow(ballvy,2));
     }
 
-    public void addSpeed() {
+    public void addSpeed(float distance) {
 
         float cur_r = (float) (Math.sqrt(Math.pow(ballvx, 2) + Math.pow(ballvy, 2)));
         float cur_theta = (float) (Math.atan2(ballvy, ballvx));
@@ -138,7 +138,7 @@ public class BallView extends SurfaceView {
         float cur_vy = (float) ( cur_r * Math.sin(cur_theta) );
 
         float new_theta = (float) ( Math.toRadians(ballr) );
-        float new_r = (float) (  SPEEDINCREMENT );
+        float new_r = (float) (  SPEEDINCREMENT / distance);
 
         float new_vx = (float) ( (cur_r + new_r) * Math.cos(new_theta) );
         float new_vy = (float) ( (cur_r + new_r) * Math.sin(new_theta) );

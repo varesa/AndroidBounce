@@ -36,10 +36,19 @@ public class BallTouchListener implements OnTouchListener {
 
         Log.e("fi.dy.esav.GrafiikkaTest", "Distance from touch to ball: " + Utils.getDistance(touchX, touchY, ballx, bally));
 
-        if(Utils.getDistance(touchX, touchY, ballx, bally) < ballview.TOUCHTRESHOLD) {
+        /*if(Utils.getDistance(touchX, touchY, ballx, bally) < ballview.TOUCHTRESHOLD) {
             Log.e("fi.dy.esav.GrafiikkaTest", "Hit the ball!!!");
             ballview.addSpeed();
+        }*/
+
+        float newdist;
+        if( Utils.getDistance(touchX, touchY, ballx, bally) < 64) {
+            newdist = 64;
+        } else {
+            newdist = (float) Utils.getDistance(touchX, touchY, ballx, bally);
         }
+
+        ballview.addSpeed(newdist * 0.1f);
 
         return false;
     }
